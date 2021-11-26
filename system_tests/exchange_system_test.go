@@ -38,6 +38,7 @@ var _ = Describe("Exchange", func() {
 				Type:       "fanout",
 				AutoDelete: false,
 				Durable:    true,
+                                Internal:   false,
 				Arguments: &runtime.RawExtension{
 					Raw: []byte(`{"alternate-exchange": "system-test"}`),
 				},
@@ -61,6 +62,7 @@ var _ = Describe("Exchange", func() {
 			"Type":       Equal(exchange.Spec.Type),
 			"AutoDelete": BeFalse(),
 			"Durable":    BeTrue(),
+                        "Internal":   BeFalse(),
 		}))
 		Expect(exchangeInfo.Arguments).To(HaveKeyWithValue("alternate-exchange", "system-test"))
 

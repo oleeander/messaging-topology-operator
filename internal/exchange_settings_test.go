@@ -21,6 +21,7 @@ var _ = Describe("GenerateExchangeSettings", func() {
 				Type:       "fanout",
 				Durable:    true,
 				AutoDelete: true,
+				Internal:   false,
 			},
 		}
 	})
@@ -42,6 +43,13 @@ var _ = Describe("GenerateExchangeSettings", func() {
 		Expect(err).NotTo(HaveOccurred())
 		Expect(settings.Durable).To(BeTrue())
 	})
+
+	It("sets Internal according to exchange.spec", func() {
+		settings, err := internal.GenerateExchangeSettings(e)
+		Expect(err).NotTo(HaveOccurred())
+		Expect(settings.Internal).To(BeFalse())
+	})
+
 
 	When("exchange arguments are provided", func() {
 		It("generates the correct exchange arguments", func() {

@@ -30,6 +30,10 @@ type ExchangeSpec struct {
 	Durable bool `json:"durable,omitempty"`
 	// Cannot be updated
 	AutoDelete bool `json:"autoDelete,omitempty"`
+	// When true clients cannot publish to this exchange directly.
+	// It then may only be used with exchange-to-exchange bindings.
+	// Channot be updated.
+	Internal bool `json:"internal,omitempty"`
 	// +kubebuilder:validation:Type=object
 	// +kubebuilder:pruning:PreserveUnknownFields
 	Arguments *runtime.RawExtension `json:"arguments,omitempty"`

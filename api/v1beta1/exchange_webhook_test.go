@@ -20,6 +20,7 @@ var _ = Describe("exchange webhook", func() {
 			Type:       "fanout",
 			Durable:    false,
 			AutoDelete: true,
+                        Internal:   false,
 			RabbitmqClusterReference: RabbitmqClusterReference{
 				Name: "some-cluster",
 			},
@@ -61,6 +62,12 @@ var _ = Describe("exchange webhook", func() {
 	It("does not allow updates on autoDelete", func() {
 		newExchange := exchange.DeepCopy()
 		newExchange.Spec.AutoDelete = false
+		Expect(apierrors.IsInvalid(newExchange.ValidateUpdate(&exchange))).To(BeTrue())
+	})
+
+	It("does not allow updates on internal", func() {
+		newExchange := exchange.DeepCopy()
+		newExchange.Spec.Internal = true
 		Expect(apierrors.IsInvalid(newExchange.ValidateUpdate(&exchange))).To(BeTrue())
 	})
 

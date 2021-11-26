@@ -26,7 +26,7 @@ func (e *Exchange) ValidateCreate() error {
 
 // ValidateUpdate implements webhook.Validator so a webhook will be registered for the type
 // returns error type 'forbidden' for updates that the controller chooses to disallow: exchange name/vhost/rabbitmqClusterReference
-// returns error type 'invalid' for updates that will be rejected by rabbitmq server: exchange types/autoDelete/durable
+// returns error type 'invalid' for updates that will be rejected by rabbitmq server: exchange types/autoDelete/durable/internal
 // exchange.spec.arguments can be updated
 func (e *Exchange) ValidateUpdate(old runtime.Object) error {
 	oldExchange, ok := old.(*Exchange)
@@ -70,8 +70,16 @@ func (e *Exchange) ValidateUpdate(old runtime.Object) error {
 	if e.Spec.Durable != oldExchange.Spec.Durable {
 		allErrs = append(allErrs, field.Invalid(
 			field.NewPath("spec", "durable"),
-			e.Spec.AutoDelete,
+			e.Spec.Durable,
 			"durable cannot be updated",
+		))
+	}
+
+	if e.Spec.Internal != oldExchange.Spec.Internal {
+		allErrs = append(allErrs, field.Invalid(
+			field.NewPath("spec", "internal"),
+			e.Spec.Internal,
+			"internal cannot be updated",
 		))
 	}
 

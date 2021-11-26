@@ -27,6 +27,7 @@ func GenerateExchangeSettings(e *topology.Exchange) (*rabbithole.ExchangeSetting
 	return &rabbithole.ExchangeSettings{
 		Durable:    e.Spec.Durable,
 		AutoDelete: e.Spec.AutoDelete,
+                Internal:   e.Spec.Internal,
 		Type:       e.Spec.Type,
 		Arguments:  arguments,
 	}, nil

@@ -47,6 +47,11 @@ spec:
               durable:
                 description: Cannot be updated
                 type: boolean
+              internal:
+                description: When true clients cannot publish to this exchange directly.
+                  It then may only be used with exchange-to-exchange bindings.
+                  Cannot be updated
+                type: boolean
               name:
                 description: Required property; cannot be updated
                 type: string
